@@ -16,7 +16,10 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(title: const Text("Prueba curso")),
+        appBar: AppBar(
+          title: const Text("Prueba curso"),
+          elevation: 50.0,
+        ),
         body: const Center(
           child: Text("Centro de prueba"),
         ),
