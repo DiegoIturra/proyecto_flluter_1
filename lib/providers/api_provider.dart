@@ -9,15 +9,6 @@ class ApiProvider extends ChangeNotifier{
 
   List<Message> listOfMessages = [];
 
-  List<Message> _parseMessages(String responseBody) {
-    final parsedOutput = jsonDecode(responseBody).cast<Map<String, dynamic>>();
-    return parsedOutput.map<Message>((json) => Message.fromJson(json)).toList();
-  }
-
-  void _showMessageInfo(Message message){
-    log(message.text);
-  }
-
   ApiProvider(){
     getOnDisplayMessages();
   }
@@ -35,6 +26,15 @@ class ApiProvider extends ChangeNotifier{
       }
     }
     notifyListeners();
+  }
+
+  List<Message> _parseMessages(String responseBody) {
+    final parsedOutput = jsonDecode(responseBody).cast<Map<String, dynamic>>();
+    return parsedOutput.map<Message>((json) => Message.fromJson(json)).toList();
+  }
+
+  void _showMessageInfo(Message message){
+    log(message.text);
   }
 
 }
