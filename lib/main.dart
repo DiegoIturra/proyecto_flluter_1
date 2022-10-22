@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto1_curso/providers/api_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:proyecto1_curso/screens/messages_screen.dart';
+
 
 void main() {
-  runApp(const MyApp());
+  runApp(const AppState());
 }
 
 class MyApp extends StatelessWidget {
@@ -10,20 +14,30 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.indigo,
-      ),
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text("Prueba curso"),
-          elevation: 50.0,
-        ),
-        body: const Center(
-          child: Text("Centro de prueba"),
-        ),
+      title: "Proyecto 1",
+      theme: ThemeData(
+        primarySwatch: Colors.indigo
       ),
+      initialRoute: '/home',
+      routes: {
+        '/home':  (context) => const MesssagesScreen() 
+      },
     );
   }
+}
+
+class AppState extends StatelessWidget{
+  const AppState({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ApiProvider(),lazy: false,),
+      ],
+      child: const MyApp(),
+    );
+  }
+
 }
