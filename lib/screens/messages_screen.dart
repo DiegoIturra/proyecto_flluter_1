@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:proyecto1_curso/models/message.dart';
 import 'package:proyecto1_curso/providers/api_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:proyecto1_curso/screens/members_screen.dart';
+import 'package:proyecto1_curso/screens/screens.dart';
 import 'package:proyecto1_curso/widgets/message_list_item.dart';
 
 class MesssagesScreen extends StatelessWidget{
@@ -60,6 +62,7 @@ class MesssagesScreen extends StatelessWidget{
               title: getTextOnListTile("Integrantes"),
               onTap: (() {
                 log("Has hecho tap en Integrantes");
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> const MembersScreen()));
               }),
             ),
 
@@ -67,6 +70,7 @@ class MesssagesScreen extends StatelessWidget{
               title: getTextOnListTile("Salir"),
               onTap: (() {
                 log("Has hecho tap en Salir");
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginScreen()));
               }),
             )
           ],

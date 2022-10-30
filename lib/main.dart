@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:proyecto1_curso/providers/api_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto1_curso/providers/login_form_provider.dart';
+import 'package:proyecto1_curso/screens/members_screen.dart';
 import 'package:proyecto1_curso/screens/messages_screen.dart';
 import 'package:proyecto1_curso/screens/screens.dart';
 
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/home':  (context) => const MesssagesScreen(),
         '/login': (context) =>  LoginScreen(),
+        '/members': (context) => MembersScreen()
       },
     );
   }
