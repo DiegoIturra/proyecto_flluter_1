@@ -1,9 +1,24 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:proyecto1_curso/models/message.dart';
 import 'package:proyecto1_curso/providers/api_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:proyecto1_curso/widgets/message_list_item.dart';
 
 class MesssagesScreen extends StatelessWidget{
   const MesssagesScreen({Key? key}) : super(key: key);
+
+  Text getTextOnListTile(String text){
+    return Text(
+      text,
+      textAlign: TextAlign.center,
+      style: const TextStyle(
+        fontSize: 25,
+        fontWeight: FontWeight.bold
+      ),
+    );
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -18,14 +33,45 @@ class MesssagesScreen extends StatelessWidget{
         padding: const EdgeInsets.all(10),
         itemCount: numberOfMessages,
         itemBuilder: (BuildContext context, int index){
-          String message = characterProvider.listOfMessages[index].text;
-          return Container(
-            height: 50,
-            color: Colors.amber,
-            child: Center(child: Text('Entry $message')),
-          );
+          Message message = characterProvider.listOfMessages[index];
+          return getContainerItem(message);
         }
-      )//const Center(child: Text("Texto de prueba con mensajes")), //Modificar despues para desplegar mensajes
+      ),
+      drawer: Drawer(
+        backgroundColor: Colors.indigo.shade200,
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.indigo.shade400,
+              ),
+              child: const Text('proyecto 1'),
+            ),
+
+            ListTile(
+              title:  getTextOnListTile("Agregar"),
+              onTap: (() {
+                log("Has hecho tap en Agregar");
+              }),
+            ),
+
+            ListTile(
+              title: getTextOnListTile("Integrantes"),
+              onTap: (() {
+                log("Has hecho tap en Integrantes");
+              }),
+            ),
+
+            ListTile(
+              title: getTextOnListTile("Salir"),
+              onTap: (() {
+                log("Has hecho tap en Salir");
+              }),
+            )
+          ],
+        ),
+      ),//const Center(child: Text("Texto de prueba con mensajes")), //Modificar despues para desplegar mensajes
     );
   }
 }
