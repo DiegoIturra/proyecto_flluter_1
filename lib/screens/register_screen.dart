@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto1_curso/providers/login_form_provider.dart';
 import 'package:provider/provider.dart';
 
+import 'package:proyecto1_curso/providers/login_form_provider.dart';
+import 'package:proyecto1_curso/services/auth_services.dart';
+import 'package:proyecto1_curso/services/notifications_service.dart';
 import 'package:proyecto1_curso/widgets/widgets.dart';
 import 'package:proyecto1_curso/UI/input_decorations.dart';
 
-class LoginScreen extends StatelessWidget {
+class registerScreen extends StatelessWidget {
+  const registerScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +22,8 @@ class LoginScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     const SizedBox(height: 10),
-                    Text('Login', style: Theme.of(context).textTheme.headline4),
+                    Text('Crear cuenta',
+                        style: Theme.of(context).textTheme.headline4),
                     const SizedBox(height: 10),
                     ChangeNotifierProvider(
                       create: (_) => LoginFormProvider(),
@@ -28,6 +33,12 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 50),
+              TextButton(
+                onPressed: () =>
+                    Navigator.pushReplacementNamed(context, '/login'),
+                child: const Text('Ya tengo una cuenta'),
+              ),
+              const SizedBox(height: 30)
             ],
           ),
         ),
@@ -43,12 +54,15 @@ class _LoginForm extends StatelessWidget {
     return Container(
       child: Form(
         //TODO: mantener referencia al Key
-        autovalidateMode: AutovalidateMode.onUserInteraction,
+        //autovalidateMode: AutovalidateMode.onUserInteraction,
+
         key: loginForm.formKey,
         child: Column(
           children: [
             TextFormField(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               autocorrect: false,
+              autofocus: false,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecorations.authInputDecoration(
                 hintText: 'example@mail.com',
@@ -68,9 +82,11 @@ class _LoginForm extends StatelessWidget {
             ),
             const SizedBox(height: 30),
             TextFormField(
-              obscureText: true,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               autocorrect: false,
-              keyboardType: TextInputType.emailAddress,
+              autofocus: false,
+              obscureText: true,
+              //keyboardType: TextInputType.,
               decoration: InputDecorations.authInputDecoration(
                 hintText: '*******',
                 labelText: 'Contraseña',
@@ -78,8 +94,9 @@ class _LoginForm extends StatelessWidget {
               ),
               onChanged: (value) => loginForm.password = value,
               validator: (value) {
-                if (value != null && value.isNotEmpty) return null;
-                return 'Debe de ingresar contraseña valida';
+                if (value == null) return 'Este campo es requerido';
+                if (value.length >= 6) return null;
+                return 'La contraseña debe de tener al menos 6 caracteres';
               },
             ),
             const SizedBox(height: 30),
@@ -93,7 +110,7 @@ class _LoginForm extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
                 child: Text(
-                  loginForm.isLoading ? 'Conectando...' : 'Ingresar',
+                  loginForm.isLoading ? 'Creando cuenta...' : 'Registrar',
                   style: const TextStyle(color: Colors.white),
                 ),
               ),
@@ -101,13 +118,24 @@ class _LoginForm extends StatelessWidget {
                   ? null
                   : () async {
                       FocusScope.of(context).unfocus();
+                      final authService =
+                          Provider.of<AuthService>(context, listen: false);
 
                       if (!loginForm.isValidForm()) return;
                       loginForm.isLoading = true;
                       await Future.delayed(const Duration(seconds: 2));
-                      loginForm.isLoading = false;
 
-                      Navigator.pushReplacementNamed(context, '/home');
+                      final String? errorMessage = await authService.createUser(
+                          loginForm.email, loginForm.password);
+
+                      if (errorMessage == null) {
+                        Navigator.pushReplacementNamed(context, '/home');
+                      } else {
+                        NotificationsService.showSnackbar(
+                            'Correo ya registrado');
+                        //print(errorMessage);
+                        loginForm.isLoading = false;
+                      }
                     },
             ),
           ],
