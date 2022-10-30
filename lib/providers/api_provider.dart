@@ -34,7 +34,7 @@ class ApiProvider extends ChangeNotifier{
   }
 
   void _showMessageInfo(Message message){
-    log(message.text);
+    //log(message.text);
   }
 
 }
