@@ -19,7 +19,6 @@ class MesssagesScreen extends StatelessWidget{
         itemCount: numberOfMessages,
         itemBuilder: (BuildContext context, int index){
           String message = characterProvider.listOfMessages[index].text;
-          print(message);
           return Container(
             height: 50,
             color: Colors.amber,
