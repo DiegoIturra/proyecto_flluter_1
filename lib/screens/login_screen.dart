@@ -119,8 +119,7 @@ class _LoginForm extends StatelessWidget {
                       loginForm.isLoading = true;
                       await Future.delayed(const Duration(seconds: 2));
 
-                      final String? errorMessage = await authService.login(
-                          loginForm.email, loginForm.password);
+                      final String? errorMessage = await authService.login(loginForm.email, loginForm.password);
 
                       if (errorMessage == null) {
                         Navigator.pushReplacementNamed(context, '/home');
