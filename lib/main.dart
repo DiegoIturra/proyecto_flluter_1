@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:proyecto1_curso/providers/api_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto1_curso/providers/login_form_provider.dart';
+import 'package:proyecto1_curso/screens/members_screen.dart';
 import 'package:proyecto1_curso/services/notifications_service.dart';
 import 'package:proyecto1_curso/screens/screens.dart';
 import 'package:proyecto1_curso/services/auth_services.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginScreen(),
         '/register': (context) => const registerScreen(),
         '/checking': (context) => const CheckAuthScreen(),
+        '/members': (context) => const MembersScreen()
       },
       scaffoldMessengerKey: NotificationsService.messengerKey,
     );
