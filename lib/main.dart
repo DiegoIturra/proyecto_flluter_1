@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "Proyecto 1",
       theme: ThemeData(primarySwatch: Colors.indigo),
-      initialRoute: '/checking',
+      initialRoute: '/login',
       routes: {
         '/home': (context) => const MesssagesScreen(),
         '/login': (context) => LoginScreen(),

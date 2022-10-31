@@ -59,24 +59,4 @@ class AuthService extends ChangeNotifier {
   Future<String> readToken() async {
     return await storage.read(key: 'token') ?? '';
   }
-
-  Future<String?> datauser(String email, String password) async {
-    final Map<String, dynamic> authData = {
-      'email': email,
-      'password': password,
-    };
-    final url = Uri.https(
-        _baseUrl, '/v1/accounts:signInWithPassword', {'key': _firebaseToken});
-    final resp = await http.post(url, body: json.encode(authData));
-
-    final Map<String, dynamic> decodedResp = json.decode(resp.body);
-
-    if (decodedResp.containsKey('idToken')) {
-      //Guaradar en un lugar seguro
-      await storage.write(key: 'token', value: decodedResp['idToken']);
-      return null;
-    } else {
-      return decodedResp['error']['message'];
-    }
-  }
 }

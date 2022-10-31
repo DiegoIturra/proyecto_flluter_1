@@ -13,17 +13,14 @@ import 'package:proyecto1_curso/services/auth_services.dart';
 class MesssagesScreen extends StatelessWidget {
   const MesssagesScreen({Key? key}) : super(key: key);
 
-  Text getTextOnListTile(String text){
+  Text getTextOnListTile(String text) {
     return Text(
       text,
       textAlign: TextAlign.center,
-      style: const TextStyle(
-        fontSize: 25,
-        fontWeight: FontWeight.bold
-      ),
+      style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
     );
   }
-  
+
   @override
   Widget build(BuildContext context) {
     final ApiProvider characterProvider = Provider.of<ApiProvider>(context);
@@ -36,13 +33,12 @@ class MesssagesScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('List of Messages')),
       backgroundColor: Colors.indigoAccent,
       body: ListView.builder(
-        padding: const EdgeInsets.all(10),
-        itemCount: numberOfMessages,
-        itemBuilder: (BuildContext context, int index){
-          Message message = characterProvider.listOfMessages[index];
-          return getContainerItem(message);
-        }
-      ),
+          padding: const EdgeInsets.all(10),
+          itemCount: numberOfMessages,
+          itemBuilder: (BuildContext context, int index) {
+            Message message = characterProvider.listOfMessages[index];
+            return getContainerItem(message);
+          }),
       drawer: Drawer(
         backgroundColor: Colors.indigo.shade200,
         child: ListView(
@@ -54,23 +50,26 @@ class MesssagesScreen extends StatelessWidget {
               ),
               child: const Text('proyecto 1'),
             ),
-
             ListTile(
-              title:  getTextOnListTile("Agregar"),
+              title: getTextOnListTile("Agregar"),
               onTap: (() {
                 log("Has hecho tap en Agregar");
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> const CreateScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const CreateScreen()));
               }),
             ),
-
             ListTile(
               title: getTextOnListTile("Integrantes"),
               onTap: (() {
                 log("Has hecho tap en Integrantes");
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> const MembersScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MembersScreen()));
               }),
             ),
-
             ListTile(
               title: getTextOnListTile("Salir"),
               onTap: (() {
@@ -82,7 +81,7 @@ class MesssagesScreen extends StatelessWidget {
             )
           ],
         ),
-      ),//const Center(child: Text("Texto de prueba con mensajes")), //Modificar despues para desplegar mensajes
+      ), //const Center(child: Text("Texto de prueba con mensajes")), //Modificar despues para desplegar mensajes
     );
   }
 }
